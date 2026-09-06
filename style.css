@@ -96,6 +96,10 @@ h1,h2,h3,.logo,.hero-role{font-family:'Space Grotesk',sans-serif}
 .projects-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .project-card a{color:var(--primary2);text-decoration:none;display:inline-block;margin-top:14px}
 .project-card a:hover{color:var(--fg)}
+.project-tag{
+  display:inline-block;font-size:11px;letter-spacing:1px;color:var(--primary2);
+  border:1px solid rgba(94,200,242,.35);border-radius:999px;padding:2px 10px;margin-bottom:10px;
+}
 .contact-note{color:var(--muted)}
 .socials{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px}
 .socials a{

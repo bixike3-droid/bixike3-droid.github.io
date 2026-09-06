@@ -148,7 +148,7 @@ window.addEventListener('resize', () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-const roles = ['Developer', 'Builder', 'Problem Solver', 'Learner'];
+const roles = ['开发者', '创造者', '校园平台作者', 'Builder'];
 const typedEl = document.getElementById('typed');
 let roleIndex = 0;
 let charCount = 0;
