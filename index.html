@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bixike · 个人主页</title>
+  <meta name="description" content="Bixike 的个人主页" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js" } }
+  </script>
+</head>
+<body>
+  <div class="nebula"></div>
+  <canvas id="bg"></canvas>
+  <nav class="nav">
+    <a href="#top" class="logo">Bixike<span>.</span></a>
+    <div class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#skills">技能</a>
+      <a href="#projects">项目</a>
+      <a href="#contact">联系</a>
+    </div>
+  </nav>
+  <header id="top" class="hero">
+    <p class="hero-eyebrow">// 欢迎来到我的宇宙</p>
+    <h1 class="hero-name">Bixike</h1>
+    <p class="hero-role">我是 <span class="type" id="typed"></span><span class="caret">|</span></p>
+    <p class="hero-sub">在代码里探索，把想法变成现实。</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="https://github.com/bixike3-droid" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="#contact">联系我</a>
+      <a class="btn btn-ghost" href="#projects">看项目</a>
+    </div>
+    <div class="scroll-hint">SCROLL</div>
+  </header>
+  <main>
+    <section id="about" class="section">
+      <h2 class="section-title">关于我</h2>
+      <div class="card">
+        <p>这里写一句你的自我介绍：你是谁、在做什么、对什么着迷。</p>
+        <p>把这段文字换成你自己的内容，就是一个真正属于你的主页了。</p>
+      </div>
+    </section>
+    <section id="skills" class="section">
+      <h2 class="section-title">技能</h2>
+      <div class="grid skills-grid">
+        <div class="tile"><h3>前端</h3><p>HTML / CSS / JavaScript</p></div>
+        <div class="tile"><h3>后端</h3><p>Node.js / Python</p></div>
+        <div class="tile"><h3>工具</h3><p>Git / Docker / Linux</p></div>
+        <div class="tile"><h3>其他</h3><p>这里再补一项</p></div>
+      </div>
+    </section>
+    <section id="projects" class="section">
+      <h2 class="section-title">项目</h2>
+      <div class="grid projects-grid">
+        <article class="project-card">
+          <h3>项目名称</h3>
+          <p>一两句话介绍这个项目做什么、用了什么技术。</p>
+          <a href="https://github.com/bixike3-droid" target="_blank" rel="noopener">查看 ›</a>
+        </article>
+        <article class="project-card">
+          <h3>项目名称</h3>
+          <p>一两句话介绍这个项目做什么、用了什么技术。</p>
+          <a href="https://github.com/bixike3-droid" target="_blank" rel="noopener">查看 ›</a>
+        </article>
+        <article class="project-card">
+          <h3>项目名称</h3>
+          <p>一两句话介绍这个项目做什么、用了什么技术。</p>
+          <a href="https://github.com/bixike3-droid" target="_blank" rel="noopener">查看 ›</a>
+        </article>
+      </div>
+    </section>
+    <section id="contact" class="section">
+      <h2 class="section-title">联系我</h2>
+      <p class="contact-note">欢迎交流，也可以直接发邮件或找我。</p>
+      <div class="socials">
+        <a href="https://github.com/bixike3-droid" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:3222701300@qq.com">Email</a>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <p>© <span id="year"></span> Bixike · 用 <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a> 构建</p>
+  </footer>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
