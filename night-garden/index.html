@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>夜樱庭院 · 场景预览</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#07101d;color:#eae9ef;font:14px system-ui,"Microsoft YaHei",sans-serif;overflow:hidden}canvas{display:block;width:100%;height:100%}.title{position:fixed;left:28px;top:25px;pointer-events:none}.title small{letter-spacing:.24em;color:#c5adb8;font-size:10px}.title h1{font-size:25px;letter-spacing:.14em;font-weight:400;margin:8px 0}.title p{font-size:12px;color:#a2adbc;margin:0}.panel{position:fixed;right:22px;top:22px;width:220px;background:#0a1320d9;border:1px solid #ffffff19;border-radius:14px;padding:17px;backdrop-filter:blur(16px)}.panel h2{font-size:12px;color:#b8c4d3;font-weight:400;margin:0 0 16px}.row{display:flex;align-items:center;justify-content:space-between;margin:12px 0;gap:10px}.row input[type=range]{width:98px;accent-color:#d7a7bc}.row input[type=checkbox]{accent-color:#d7a7bc}select,button{background:#ffffff09;color:#e9e8ef;border:1px solid #ffffff25;border-radius:7px;padding:7px;font:inherit}select option{background:#172132}button{cursor:pointer}.buttons{display:flex;gap:7px;margin-top:16px}.buttons button{flex:1;font-size:12px}button:hover{background:#ffffff1a}.stats{font-size:11px;font-variant-numeric:tabular-nums;color:#9dabbc;border-top:1px solid #ffffff16;padding-top:13px;line-height:1.8;margin-top:17px}.hint{position:fixed;bottom:22px;left:28px;font-size:11px;color:#acb4c5}.loading{position:fixed;inset:0;display:grid;place-content:center;text-align:center;background:#07101d;z-index:5;line-height:2}.loading strong{font-weight:400;font-size:24px;letter-spacing:.2em}.loading span{color:#afbdcc;font-size:13px}.error{color:#ffb9ba!important;max-width:600px;padding:20px}.note{font-size:10px;color:#8290a2;margin-top:12px;line-height:1.7}#fps{color:#e8c6d6;font-size:15px}.reference{position:fixed;inset:0;background:#060a10ed;z-index:8;display:none;align-items:center;justify-content:center;padding:50px}.reference img{max-width:100%;max-height:100%;object-fit:contain}.reference button{position:absolute;right:22px;top:20px}@media(max-width:600px){.title{left:16px;top:18px}.title h1{font-size:19px}.title p{display:none}.panel{width:180px;right:12px;top:90px;padding:12px}.hint{left:16px;bottom:14px;max-width:180px;line-height:1.7}}
+  </style>
+  <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
+</head>
+<body>
+  <div class="title"><small>NIGHT SAKURA GARDEN</small><h1>夜樱庭院</h1><p>月色、微风，和一盏等人的灯。</p></div>
+  <aside class="panel" aria-label="场景控制"><h2>场景控制</h2>
+    <label class="row">微风 <input id="wind" type="checkbox" checked></label>
+    <label class="row">风力 <input id="strength" type="range" min="0" max="2" step=".05" value="0.65"></label>
+    <label class="row">曝光 <input id="exposure" type="range" min=".3" max="2.5" step=".05" value="1"></label>
+    <label class="row">自动环绕 <input id="orbit" type="checkbox"></label>
+    <label class="row">画质 <select id="quality"><option value="1">流畅</option><option value="1.5" selected>标准</option><option value="2">清晰</option></select></label>
+    <div class="buttons"><button id="reset">原始视角</button><button id="overview">场景全貌</button></div>
+    <div class="buttons"><button id="reference">原始渲染图</button><button id="capture">保存截图</button></div>
+    <div class="stats"><span id="fps">— FPS</span><br><span id="counts">场景载入中</span></div>
+    <div class="note">当前 Blender 场景的实时预览。程序化材质、体积雾与反射采用网页近似效果。</div>
+  </aside>
+  <div class="hint">拖动旋转 · 滚轮缩放 · 右键拖动平移</div>
+  <div class="loading" id="loading"><strong>夜樱庭院</strong><span id="progress">正在读取 Blender 场景…</span></div>
+  <div class="reference" id="reference-view"><img src="./reference.png" alt="Blender 原始渲染图"><button id="close-reference">返回实时场景</button></div>
+  <script type="module" src="./viewer.js"></script>
+  <script>window.addEventListener('error',e=>{const p=document.getElementById('progress');if(document.getElementById('loading').style.display!=='none'){p.textContent='预览加载失败：'+e.message;p.className='error';}});if(location.protocol==='file:'){document.getElementById('progress').textContent='请运行同目录的「启动预览.cmd」，通过本地网页地址打开。';}</script>
+</body>
+</html>
