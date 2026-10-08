@@ -9,10 +9,10 @@ try{
  r=await post({name:" ",message:"问候"});assert.equal(r.status,400);
  r=await post({name:"访客",message:"x".repeat(401)});assert.equal(r.status,400);
  r=await post({name:"访客",message:"问候",website:"spam"});assert.equal(r.status,400);
- r=await post({name:"本地验证",message:"<script>validation-only</script>"});assert.equal(r.status,201);saved=(await r.json()).message;
+ r=await post({name:"本地验证",message:"<script>validation-only</script>"});assert.equal(r.status,201);const submission=await r.json();saved=submission.message;
  assert.equal(saved.name,"本地验证");assert.equal(saved.message,"<script>validation-only</script>");assert.equal("visitorKey" in saved,false);
  const cookie=r.headers.get("set-cookie").split(";")[0];
- const list=await fetch(base+"/api/guestbook").then(r=>r.json());assert(list.messages.some(m=>m.id===saved.id));
+ const list=await fetch(base+"/api/guestbook").then(r=>r.json());assert.equal(list.messages.some(m=>m.id===saved.id),!submission.pending);
  r=await post({name:"本地验证",message:"重复提交"},{Cookie:cookie});assert.equal(r.status,429);
  console.log("Guestbook verified: origin, parsing, limits, honeypot, persistence, rate limit, private fields.");
 }finally{

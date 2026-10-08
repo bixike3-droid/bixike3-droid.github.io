@@ -2,6 +2,7 @@ import { and, desc, eq, gte } from "drizzle-orm";
 import { getDb } from "../../../db";
 import { guestMessages } from "../../../db/schema";
 import { z } from "zod";
+import { isGardenOwner, readGuestbookSettings } from "../../../lib/guestbook";
 
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "no-store" };
@@ -14,8 +15,11 @@ const payload = z.object({
 const selection = { id: guestMessages.id, name: guestMessages.name, message: guestMessages.message, createdAt: guestMessages.createdAt };
 export async function GET() {
  try {
-  const messages = await getDb().select(selection).from(guestMessages).orderBy(desc(guestMessages.createdAt)).limit(50).all();
-  return Response.json({ messages }, { headers });
+  const [messages, settings, canManage] = await Promise.all([
+   getDb().select(selection).from(guestMessages).where(eq(guestMessages.status, "approved")).orderBy(desc(guestMessages.createdAt), desc(guestMessages.id)).limit(50).all(),
+   readGuestbookSettings(), isGardenOwner(),
+  ]);
+  return Response.json({ messages, requireApproval: settings.requireApproval, canManage }, { headers });
  } catch {
   return Response.json({ error: "访客簿暂时没有打开，请稍后再试。" }, { status: 503, headers });
  }
@@ -35,8 +39,10 @@ export async function POST(request: Request) {
   const recent = await db.select({ id: guestMessages.id }).from(guestMessages).where(and(eq(guestMessages.visitorKey, visitorKey), gte(guestMessages.createdAt, new Date(Date.now() - 30000).toISOString()))).limit(1).get();
   if (recent) return Response.json({ error: "信已寄出，等半分钟再写下一封吧。" }, { status: 429, headers });
   const message = { id: crypto.randomUUID(), name: parsed.data.name, message: parsed.data.message, createdAt: new Date().toISOString() };
-  await db.insert(guestMessages).values({ ...message, visitorKey });
-  return Response.json({ message }, { status: 201, headers: { ...headers, "Set-Cookie": `garden-visitor=${visitorKey}; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000${new URL(request.url).protocol === "https:" ? "; Secure" : ""}` } });
+  const settings = await readGuestbookSettings();
+  const status = settings.requireApproval ? "pending" : "approved";
+  await db.insert(guestMessages).values({ ...message, visitorKey, status });
+  return Response.json({ message, pending: status === "pending" }, { status: 201, headers: { ...headers, "Set-Cookie": `garden-visitor=${visitorKey}; HttpOnly; SameSite=Lax; Path=/; Max-Age=31536000${new URL(request.url).protocol === "https:" ? "; Secure" : ""}` } });
  } catch {
   return Response.json({ error: "信暂时没能寄出，内容还在，请稍后重试。" }, { status: 503, headers });
  }

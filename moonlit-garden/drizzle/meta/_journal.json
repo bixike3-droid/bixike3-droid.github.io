@@ -15,6 +15,13 @@
       "when": 1791442116974,
       "tag": "0001_guest_messages",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791446044213,
+      "tag": "0002_guestbook_moderation",
+      "breakpoints": true
     }
   ]
 }

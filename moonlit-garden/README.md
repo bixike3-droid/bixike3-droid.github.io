@@ -8,7 +8,9 @@ bixike3-droid 的场景式个人网站。六个全屏空间通过点击切换：
 
 ## 留言
 
-访客通过昵称和留言表单提交内容，留言保存在 Cloudflare D1 数据库。GET /api/guestbook 返回最近 50 封信，POST /api/guestbook 保存一封信。支持长度限制、来源校验、重复提交间隔和失败重试。网页以普通文字渲染留言。
+访客通过昵称和留言表单提交内容，留言保存在 Cloudflare D1 数据库。GET /api/guestbook 返回最近 50 封公开留言，POST /api/guestbook 保存一封信。默认先审核再展示；提交成功后会显示待审核提示。支持长度限制、来源校验、重复提交间隔和失败重试。网页以普通文字渲染留言。
+
+主人登录后可在 /admin/guestbook 审核、公开、隐藏、删除或恢复留言，并切换新留言的展示方式。删除会移入回收站；恢复后回到待审核。管理权限在服务端与数据库中已绑定的庭院主人身份校验。管理列表支持分类、数量和分页，更新冲突会提示刷新。
 
 ## 本地预览
 
@@ -17,9 +19,10 @@ bixike3-droid 的场景式个人网站。六个全屏空间通过点击切换：
     node scripts/run-framework.mjs build
     node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_even_northstar.sql
     node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_guest_messages.sql
+    node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0002_guestbook_moderation.sql
     node scripts/run-framework.mjs dev
 
-默认预览地址 http://localhost:5173。类型检查：node node_modules/typescript/bin/tsc --noEmit。留言集成检查：node scripts/check-guestbook.mjs，仅连接本机，验证后清理其创建的验证记录。
+默认预览地址 http://localhost:5173。类型检查：node node_modules/typescript/bin/tsc --noEmit --incremental false。留言集成检查：node scripts/check-guestbook.mjs。审核与权限检查：node scripts/check-guestbook-moderation.mjs。检查仅连接本机，验证后清理创建的记录并恢复展示设置；请在本机没有同时编辑时运行。
 
 ## 发布
 
