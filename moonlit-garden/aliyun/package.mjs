@@ -1,0 +1,11 @@
+import { cp, mkdir, readFile, writeFile } from 'node:fs/promises';
+const target = 'outputs/aliyun-release';
+await mkdir(target, { recursive: true });
+await cp('aliyun/server.mjs', target+'/server.mjs');
+await cp('aliyun/dist', target+'/dist', { recursive: true });
+await cp('aliyun/deploy', target+'/deploy', { recursive: true });
+await cp('aliyun/README.md', target+'/README.md');
+await writeFile(target+'/RELEASE.json', JSON.stringify({ domain:'sakura.baodaoxiaoyuan.cn', runtime:'Node.js >=22.18', database:'SQLite', entrypoint:'server.mjs', builtAt:new Date().toISOString() },null,2)+'\n');
+const html = await readFile(target+'/dist/index.html','utf8');
+if(!html.includes('/assets/'))throw new Error('Unexpected frontend output');
+console.log('Deployable release packaged without credentials or data files.');
