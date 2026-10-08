@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791281030927,
+      "tag": "0000_even_northstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791442116974,
+      "tag": "0001_guest_messages",
+      "breakpoints": true
+    }
+  ]
+}
