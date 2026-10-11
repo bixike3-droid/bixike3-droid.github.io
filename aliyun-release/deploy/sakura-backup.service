@@ -1,0 +1,14 @@
+[Unit]
+Description=Back up moonlit garden database
+After=sakura-garden.service
+
+[Service]
+Type=oneshot
+User=sakura-garden
+Group=sakura-garden
+Environment=SAKURA_DATA_DIR=/var/lib/sakura-garden
+ExecStart=/opt/sakura-garden/runtime/node /opt/sakura-garden/server.mjs backup
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/sakura-garden
