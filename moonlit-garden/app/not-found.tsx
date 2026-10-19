@@ -1,0 +1,1 @@
+export default function NotFound() { return <main className="access-message"><span className="eyebrow">404 · 走到小路尽头了</span><h1>这页还没有留下足迹。</h1><a className="button" href="/">回到庭院 →</a></main>; }

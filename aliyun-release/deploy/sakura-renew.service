@@ -1,0 +1,6 @@
+[Unit]
+Description=Renew moonlit garden HTTPS certificate
+
+[Service]
+Type=oneshot
+ExecStart=/opt/sakura-garden/renew.sh

@@ -1,0 +1,15 @@
+[Unit]
+Description=Moonlit garden HTTPS gateway
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/nginx -c /opt/sakura-garden/nginx.conf -g "daemon off;"
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=3
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

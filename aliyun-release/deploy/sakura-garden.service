@@ -1,0 +1,27 @@
+[Unit]
+Description=Moonlit garden application
+After=network.target
+
+[Service]
+Type=simple
+User=sakura-garden
+Group=sakura-garden
+WorkingDirectory=/opt/sakura-garden
+Environment=SAKURA_ORIGIN=https://sakura.baodaoxiaoyuan.cn
+Environment=SAKURA_DATA_DIR=/var/lib/sakura-garden
+Environment=HOST=127.0.0.1
+Environment=PORT=3210
+Environment=NODE_OPTIONS=--max-old-space-size=128
+ExecStart=/opt/sakura-garden/runtime/node /opt/sakura-garden/server.mjs
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/sakura-garden
+PrivateTmp=true
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

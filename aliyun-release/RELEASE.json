@@ -1,0 +1,7 @@
+{
+  "domain": "sakura.baodaoxiaoyuan.cn",
+  "runtime": "Node.js >=22.18",
+  "database": "SQLite",
+  "entrypoint": "server.mjs",
+  "builtAt": "2026-10-08T15:22:31.868Z"
+}
